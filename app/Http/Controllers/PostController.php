@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Models\Author;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -14,7 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('page-all-posts');
+        $posts = Post::with('author:id,author_name')->get();
+
+        return view('page-all-posts', compact('posts'));
     }
 
     /**
@@ -32,7 +35,6 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        dd($request->validated());
         $post = Post::create($request->validated());
         return 'post created';
     }

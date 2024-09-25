@@ -8,7 +8,9 @@ class StorePostRequest extends FormRequest
 {
     public function prepareForValidation()
     {
-        
+        $this->merge([
+            'author_id' => intval($this->author_id)
+        ]);
     }
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +30,7 @@ class StorePostRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required','string', 'max:255'],
-            'author_id' => ['required', 'exists:authors,id'],
+            'author_id' => ['required', 'integer', 'exists:authors,id'],
         ];
     }
 }
