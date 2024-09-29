@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetIdRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Author;
 use App\Models\Post;
@@ -36,15 +37,19 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $post = Post::create($request->validated());
+
+
         return 'post created';
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(GetIdRequest $request)
     {
-        //
+        $post = Post::findOrFail($request->id);
+
+        return view('show-post', compact('post'));
     }
 
     /**
@@ -52,7 +57,7 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('update-post');
     }
 
     /**
@@ -66,8 +71,11 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(GetIdRequest $request)
     {
-        //
+        $post = Post::findOrFail($request->id);
+
+        $post->delete();
+        return redirect()->route('all_post');
     }
 }
