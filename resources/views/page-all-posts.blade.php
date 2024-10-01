@@ -274,7 +274,7 @@
                                 <ul class="post__box-list">
 
                                     <li class="post__box-item">
-                                        <a href="{{route('form_post', $post->id)}}">Update</a>
+                                        <a href="{{route('form_update_post', $post->id)}}">Update</a>
                                     </li>
                                     <li class="post__box-item">
                                         <form action="{{route('delete_post', $post->id)}}" method="POST">

@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="">
+<div class="create__form">
     <form action="{{route('create_post')}}" method="post">
         @csrf
         <input name="title" type="text" placeholder="title">

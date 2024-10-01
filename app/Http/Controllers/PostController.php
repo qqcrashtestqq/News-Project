@@ -57,15 +57,29 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        return view('update-post');
+        $post = Post::findOrFail($id); // Ищем пост по ID
+        $authors = Author::all(); // Получаем всех авторов
+
+        return view('update-post', compact('post', 'authors'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StorePostRequest $request, string $id)
     {
-        //
+      $post = Post::findOrFail($id);
+      $post->update($request->validated());
+
+        // Обновляем поля статьи
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
+        $post->author_id = $request->input('author_id');
+
+        $post->save();
+
+        // Перенаправляем пользователя на страницу со всеми постами или на конкретный пост
+        return redirect()->route('all_post')->with('success', 'Post updated successfully!');
     }
 
     /**

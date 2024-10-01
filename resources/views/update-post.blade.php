@@ -9,13 +9,23 @@
 </head>
 <body>
 
-<form action="">
-    <input name="title" type="text" placeholder="title">
-    <textarea name="description">
-
-    </textarea>
-    <button>ok</button>
+<form action="{{ route('update_post', $post->id) }}" method="post">
+    @csrf
+    @method('PUT')
+    <input name="title" type="text" placeholder="title" value="{{ $post->title }}">
+    <textarea name="description">{{ $post->description }}</textarea>
+    <select name="author_id">
+        @foreach($authors as $author)
+            <option value="{{ $author->id }}" {{ $post->author_id == $author->id ? 'selected' : '' }}>
+                {{ $author->author_name }}
+            </option>
+        @endforeach
+    </select>
+    <button type="submit">Update Post</button>
 </form>
+
+
+
 
 </body>
 </html>
